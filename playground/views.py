@@ -18,12 +18,10 @@ def say_hello(request):
     #     Q(inventory__lt=10) | Q(unit_price__lt=20)).order_by('title')[:40]
 
     # products = Product.objects.values('id', 'title', 'collection__title')
+    queryset = Product.objects.select_related('collection').all()
 
-    queryset = Product.objects.filter(
-        id__in = OrderItem.objects.values('product_id').distinct()).order_by('title')
-
-
+    # queryset = Product.objects.filter(
+    #     id__in = OrderItem.objects.values('product_id').distinct()).order_by('title')
 
     # return render(request, 'hello.html', {'name': 'William', 'products': list(queryset)})
     return render(request, 'hello.html', {'name': 'William', 'products': list(queryset)})
-
